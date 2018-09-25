@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage Title="Business"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Feeds.Views.BusinessRegistrationView">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="You're a step closer to helping." FontSize="Micro" />
+            <Entry x:Name="usernameEntry"
+                   FontSize="Micro"
+                   HorizontalOptions="Center"
+                   WidthRequest="200"
+                   Text="{Binding Username}"
+                   Placeholder="Username" />
+            <Entry x:Name="businessNameEntry"
+                   FontSize="Micro"
+                   HorizontalOptions="Center"
+                   WidthRequest="200"
+                   Text="{Binding BusinessName}"
+                   Placeholder="Business Name" />
+            <Entry x:Name="addressEntry"
+                   FontSize="Micro"
+                   HorizontalOptions="Center"
+                   WidthRequest="200"
+                   Text="{Binding Address}"
+                   Placeholder="Business Address" />
+            <Entry x:Name="emailEntry"
+                   FontSize="Micro"
+                   HorizontalOptions="Center"
+                   WidthRequest="200"
+                   Keyboard="Email"
+                   Text="{Binding Email}"
+                   Placeholder="Email" />
+            <Entry x:Name="email2Entry"
+                   FontSize="Micro"
+                   HorizontalOptions="Center"
+                   WidthRequest="200"
+                   Keyboard="Email"
+                   Text="{Binding Email2}"
+                   Placeholder="Confirm Email" />
+            <Entry x:Name="phoneEntry"
+                   FontSize="Micro"
+                   HorizontalOptions="Center"
+                   WidthRequest="200"
+                   Keyboard="Telephone"
+                   Text="{Binding PhoneNo}"
+                   Placeholder="Phone" />
+            <Entry x:Name="passwordEntry"
+                   FontSize="Micro"
+                   HorizontalOptions="Center"
+                   WidthRequest="200"
+                   IsPassword="True"
+                   Text="{Binding Password}"
+                   Placeholder="Password" />
+            <Entry x:Name="password2Entry"
+                   FontSize="Micro"
+                   HorizontalOptions="Center"
+                   WidthRequest="200"
+                   IsPassword="True"
+                   Text="{Binding Password2}"
+                   Placeholder="Confirm Password" />
+            <Button BorderRadius="10"
+                    BorderWidth="1"
+                    BorderColor="Black"
+                    WidthRequest="100"
+                    HeightRequest="35"
+                    HorizontalOptions="Center"
+                    FontSize="Micro"
+                    Text="Submit"
+                    Command="{Binding SubmitCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

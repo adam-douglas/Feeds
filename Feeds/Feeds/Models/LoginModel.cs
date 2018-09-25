@@ -7,36 +7,19 @@ using Xamarin.Forms;
 
 namespace Feeds.Models
 {
-    public class LoginModel : INotifyPropertyChanged
+    public class LoginModel
     {
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
-        public string username;
-        public string Username
-        {
-            get { return username; }
-            set
-            {
-                username = value;
-                PropertyChanged(this, new PropertyChangedEventArgs("Username"));
-            }
-        }
-
-        public string password;
-        public string Password
-        {
-            get { return password; }
-            set
-            {
-                password = value;
-                PropertyChanged(this, new PropertyChangedEventArgs("Password"));
-            }
-        }
-
+        public string Username { get; set; }
+        public string Password { get; set; }
         public ICommand SubmitCommand { get; set; }
+        public ICommand BusinessTapCommand { get; set; }
+        public ICommand OrgTapCommand { get; set; }
 
         public LoginModel()
         {
             SubmitCommand = new Command(OnSubmit);
+            BusinessTapCommand = new Command(OnBusinessRegister);
+            OrgTapCommand = new Command(OnOrgRegister);
         }
 
         public void OnSubmit()
@@ -45,6 +28,16 @@ namespace Feeds.Models
             {
                 MessagingCenter.Send(this, "LoginAlert", Username);
             }
+        }
+
+        public void OnBusinessRegister()
+        {
+            MessagingCenter.Send(this, "BusinessAlert");
+        }
+
+        public void OnOrgRegister()
+        {
+            MessagingCenter.Send(this, "OrgAlert");
         }
     }
 }

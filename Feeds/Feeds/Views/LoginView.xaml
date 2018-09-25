@@ -1,15 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage NavigationPage.HasNavigationBar="False"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Feeds.Views.LoginView">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="StartAndExpand">
-            <Label Text="Username" />
-            <Entry x:Name="usernameEntry" Text="{Binding Username}" Placeholder="username" />
-            <Label Text="Password" />
-            <Entry x:Name="passwordEntry" IsPassword="True" Text="{Binding Password}" />
-            <Button Text="Login" Command="{Binding SubmitCommand}" />
-            <Label x:Name="messageLabel" />
+        <StackLayout>
+            <StackLayout Padding="0, 10, 0, 25">
+                <Image Source="https://via.placeholder.com/700x250" />
+            </StackLayout>
+
+            <StackLayout Padding="0, 0, 0, 20">
+                <Entry x:Name="usernameEntry"
+                       FontSize="Micro"
+                       HorizontalOptions="Center"
+                       WidthRequest="200"
+                       Text="{Binding Username}"
+                       Placeholder="Username" />
+
+                <Entry x:Name="passwordEntry"
+                       FontSize="Micro"
+                       IsPassword="True"
+                       HorizontalOptions="Center"
+                       WidthRequest="200"
+                       Text="{Binding Password}"
+                       Placeholder="Password"/>
+
+                <Button BorderRadius="10"
+                        BorderWidth="1"
+                        BorderColor="Black"
+                        WidthRequest="100"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        FontSize="Micro"
+                        Text="Login"
+                        Command="{Binding SubmitCommand}" />
+            </StackLayout>
+            
+            <Label HorizontalOptions="Center" FontSize="Small" Text="Register" />
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+
+                <StackLayout HorizontalOptions="CenterAndExpand">
+                    <Image HorizontalOptions="Center" Source="https://via.placeholder.com/200x200">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BusinessTapCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+
+                <StackLayout HorizontalOptions="CenterAndExpand">
+                    <Image HorizontalOptions="Center" Source="https://via.placeholder.com/200x200">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OrgTapCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
