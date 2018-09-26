@@ -6,26 +6,20 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Feeds.Models;
+using Feeds.ViewModels;
 
 namespace Feeds.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class BusinessRegistrationView : ContentPage
 	{
-        public BusinessRegistrationModel businessRegistrationModel;
+        private RegistrationViewModel registrationViewModel;
 
-		public BusinessRegistrationView ()
+        public BusinessRegistrationView ()
 		{
 			InitializeComponent ();
-            businessRegistrationModel = new BusinessRegistrationModel();
-
-            MessagingCenter.Subscribe<BusinessRegistrationModel, string>(this, "BusinessSubmitAlert", (sender, username) =>
-            {
-                DisplayAlert("Title", username, "Okay");
-            });
-
-            this.BindingContext = businessRegistrationModel;
+            registrationViewModel = new RegistrationViewModel(new PageService());
+            this.BindingContext = registrationViewModel;
 
             usernameEntry.Completed += (object sender, EventArgs e) =>
             {
@@ -64,7 +58,7 @@ namespace Feeds.Views
 
             password2Entry.Completed += (object sender, EventArgs e) =>
             {
-                businessRegistrationModel.SubmitCommand.Execute(null);
+                registrationViewModel.SubmitCommand.Execute(null);
             };
         }
 	}

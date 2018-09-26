@@ -2,41 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Feeds.Models;
-using Feeds.Views;
+using Feeds.ViewModels;
 
 namespace Feeds.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LoginView : ContentPage
 	{
-        public LoginModel loginModel;
+        private LoginViewModel loginViewModel;
 
-		public LoginView ()
-		{
-			InitializeComponent ();
-            loginModel = new LoginModel();
-
-            MessagingCenter.Subscribe<LoginModel,string>(this, "LoginAlert",(sender,username) =>
-            {
-                DisplayAlert("Title", username, "Okay");
-            });
-
-            MessagingCenter.Subscribe<LoginModel>(this, "BusinessAlert", async (sender) =>
-             {
-                 await Navigation.PushAsync(new BusinessRegistrationView());
-             });
-
-            MessagingCenter.Subscribe<LoginModel>(this, "OrgAlert", async (sender) =>
-            {
-                await Navigation.PushAsync(new OrgRegistrationView());
-            });
-
-            this.BindingContext = loginModel;
+        public LoginView()
+        {
+            InitializeComponent();
+            loginViewModel = new LoginViewModel(new PageService());
+            this.BindingContext = loginViewModel;
 
             usernameEntry.Completed += (object sender, EventArgs e) =>
             {
@@ -45,7 +27,7 @@ namespace Feeds.Views
 
             passwordEntry.Completed += (object sender, EventArgs e) =>
             {
-                loginModel.SubmitCommand.Execute(null);
+                loginViewModel.LoginCommand.Execute(null);
             };
         }
     }

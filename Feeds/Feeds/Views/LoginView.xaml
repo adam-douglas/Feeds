@@ -14,7 +14,7 @@
                        FontSize="Micro"
                        HorizontalOptions="Center"
                        WidthRequest="200"
-                       Text="{Binding Username}"
+                       Text="{Binding UserAccounts.Username}"
                        Placeholder="Username" />
 
                 <Entry x:Name="passwordEntry"
@@ -22,7 +22,7 @@
                        IsPassword="True"
                        HorizontalOptions="Center"
                        WidthRequest="200"
-                       Text="{Binding Password}"
+                       Text="{Binding UserAccounts.Password}"
                        Placeholder="Password"/>
 
                 <Button BorderRadius="10"
@@ -33,7 +33,7 @@
                         HorizontalOptions="Center"
                         FontSize="Micro"
                         Text="Login"
-                        Command="{Binding SubmitCommand}" />
+                        Command="{Binding LoginCommand}" />
             </StackLayout>
             
             <Label HorizontalOptions="Center" FontSize="Small" Text="Register" />
