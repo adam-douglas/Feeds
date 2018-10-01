@@ -2,30 +2,49 @@
 <ContentPage NavigationPage.HasNavigationBar="False"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Feeds.Views.LoginView">
+             x:Class="Feeds.Views.LoginView"
+             xmlns:converters="clr-namespace:Feeds.Converters;assembly=Feeds">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+            <Style x:Key="ValidationErrorLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Red" />
+                <Setter Property="FontSize" Value="Micro" />
+                <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout Padding="0, 10, 0, 25">
-                <Image Source="https://via.placeholder.com/700x250" />
-            </StackLayout>
+        <ScrollView>
+            <StackLayout>
+                <StackLayout Padding="0, 10, 0, 25">
+                    <Image Source="https://via.placeholder.com/700x250" />
+                </StackLayout>
 
-            <StackLayout Padding="0, 0, 0, 20">
-                <Entry x:Name="usernameEntry"
+                <StackLayout Padding="0, 0, 0, 10">
+                    <Entry x:Name="usernameEntry"
                        FontSize="Micro"
                        HorizontalOptions="Center"
                        WidthRequest="200"
-                       Text="{Binding UserAccounts.Username}"
+                       Text="{Binding Username.Value}"
                        Placeholder="Username" />
 
-                <Entry x:Name="passwordEntry"
+                    <Label Text="{Binding Username.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                       Style="{StaticResource ValidationErrorLabelStyle}" />
+
+                    <Entry x:Name="passwordEntry"
                        FontSize="Micro"
                        IsPassword="True"
                        HorizontalOptions="Center"
                        WidthRequest="200"
-                       Text="{Binding UserAccounts.Password}"
+                       Text="{Binding Password.Value}"
                        Placeholder="Password"/>
 
-                <Button BorderRadius="10"
+                    <Label Text="{Binding Password.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                       Style="{StaticResource ValidationErrorLabelStyle}" />
+
+                    <Button BorderRadius="10"
                         BorderWidth="1"
                         BorderColor="Black"
                         WidthRequest="100"
@@ -34,29 +53,30 @@
                         FontSize="Micro"
                         Text="Login"
                         Command="{Binding LoginCommand}" />
-            </StackLayout>
-            
-            <Label HorizontalOptions="Center" FontSize="Small" Text="Register" />
-
-            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-
-                <StackLayout HorizontalOptions="CenterAndExpand">
-                    <Image HorizontalOptions="Center" Source="https://via.placeholder.com/200x200">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BusinessTapCommand}" />
-                        </Image.GestureRecognizers>
-                    </Image>
                 </StackLayout>
 
-                <StackLayout HorizontalOptions="CenterAndExpand">
-                    <Image HorizontalOptions="Center" Source="https://via.placeholder.com/200x200">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding OrgTapCommand}" />
-                        </Image.GestureRecognizers>
-                    </Image>
-                </StackLayout>
+                <Label HorizontalOptions="Center" FontSize="Small" Text="Register" />
 
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+
+                    <StackLayout HorizontalOptions="CenterAndExpand">
+                        <Image HorizontalOptions="Center" Source="https://via.placeholder.com/200x200">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BusinessTapCommand}" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="CenterAndExpand">
+                        <Image HorizontalOptions="Center" Source="https://via.placeholder.com/200x200">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OrgTapCommand}" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+
+                </StackLayout>
             </StackLayout>
-        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

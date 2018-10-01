@@ -38,11 +38,6 @@ namespace Feeds.Views
 
             emailEntry.Completed += (object sender, EventArgs e) =>
             {
-                email2Entry.Focus();
-            };
-
-            email2Entry.Completed += (object sender, EventArgs e) =>
-            {
                 phoneEntry.Focus();
             };
 
@@ -52,11 +47,6 @@ namespace Feeds.Views
             };
 
             passwordEntry.Completed += (object sender, EventArgs e) =>
-            {
-                password2Entry.Focus();
-            };
-
-            password2Entry.Completed += (object sender, EventArgs e) =>
             {
                 registrationViewModel.SubmitCommand.Execute(null);
             };
