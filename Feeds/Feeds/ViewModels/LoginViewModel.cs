@@ -1,13 +1,11 @@
-﻿using Feeds.Models;
-using Feeds.Validation;
-using Feeds.Views;
+﻿using Feeds.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace Feeds.ViewModels
+namespace Feeds
 {
     class LoginViewModel : ExtendedBindableObject
     {
@@ -88,7 +86,9 @@ namespace Feeds.ViewModels
         {
             if (Validate())
             {
-                await _pageService.DisplayAlert("Login", "Successfully logged in.", "OK", "Cancel");
+                User testuser = await CosmosDBService.getAsync("1");
+
+                await _pageService.DisplayAlert("Login", testuser.Username, "OK", "Cancel");
             }
         }
 

@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using Xamarin.Forms;
 
-namespace Feeds.ViewModels
+namespace Feeds
 {
     public abstract class ExtendedBindableObject : BindableObject
     {

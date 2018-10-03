@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Feeds.Validation
+namespace Feeds
 {
     public interface IValidationRule<T>
     {

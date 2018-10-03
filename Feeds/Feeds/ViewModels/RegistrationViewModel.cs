@@ -1,12 +1,10 @@
-﻿using Feeds.Models;
-using Feeds.Validation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace Feeds.ViewModels
+namespace Feeds
 {
     class RegistrationViewModel : ExtendedBindableObject
     {

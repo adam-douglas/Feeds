@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Feeds.ViewModels
+namespace Feeds
 {
     interface IPageService
     {

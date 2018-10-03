@@ -1,10 +1,7 @@
-﻿using Feeds.ViewModels;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace Feeds.Validation
+namespace Feeds
 {
     public class ValidatableObject<T> : ExtendedBindableObject
     {

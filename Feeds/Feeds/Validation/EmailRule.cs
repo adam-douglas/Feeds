@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Feeds.Validation
+namespace Feeds
 {
     class EmailRule<T> : IValidationRule<T>
     {

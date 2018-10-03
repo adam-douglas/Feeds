@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using Xamarin.Forms;
 
-namespace Feeds.Converters
+namespace Feeds
 {
     public class FirstValidationErrorConverter : IValueConverter
     {
