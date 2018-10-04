@@ -163,7 +163,7 @@ namespace Feeds
                 newUser.Name = Name.Value;
                 newUser.Address = Address.Value;
                 newUser.Email = Email.Value;
-                newUser.Password = Password.Value;
+                newUser.Password = Hasher.Hash(Password.Value);
                 newUser.Type = Type.Value;
                 await CosmosDBService.createUser(newUser);
                 await _pageService.DisplayAlert("Registered", "Successfully registered.", "OK", "Cancel");

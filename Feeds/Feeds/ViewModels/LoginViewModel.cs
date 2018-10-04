@@ -90,7 +90,7 @@ namespace Feeds
                 {
                     await _pageService.DisplayAlert("Error", "Username not found", "OK", "Cancel");
                 }
-                else if (!loginUser.Password.Equals(Password.Value))
+                else if (!Hasher.Verify(Password.Value, loginUser.Password))
                 {
                     await _pageService.DisplayAlert("Error", "Wrong password", "OK", "Cancel");
                 }
