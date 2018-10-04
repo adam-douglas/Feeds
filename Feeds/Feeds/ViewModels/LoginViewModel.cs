@@ -14,8 +14,7 @@ namespace Feeds
         public ICommand ValidateUsernameCommand { get; private set; }
         public ICommand ValidatePasswordCommand { get; private set; }
         public ICommand LoginCommand { get; private set; }
-        public ICommand BusinessTapCommand { get; private set; }
-        public ICommand OrgTapCommand { get; private set; }
+        public ICommand RegisterCommand { get; private set; }
         private readonly IPageService _pageService;
         
         public LoginViewModel(IPageService pageService)
@@ -26,8 +25,7 @@ namespace Feeds
             ValidateUsernameCommand = new Command(() => ValidateUsername());
             ValidatePasswordCommand = new Command(() => ValidatePassword());
             LoginCommand = new Command(OnLogin);
-            BusinessTapCommand = new Command(OnBusinessTap);
-            OrgTapCommand = new Command(OnOrgTap);
+            RegisterCommand = new Command(OnRegister);
             AddValidations();
         }
 
@@ -86,20 +84,26 @@ namespace Feeds
         {
             if (Validate())
             {
-                User testuser = await CosmosDBService.getAsync("1");
+                User loginUser = await CosmosDBService.getByUsernameAsync(Username.Value);
 
-                await _pageService.DisplayAlert("Login", testuser.Username, "OK", "Cancel");
+                if (loginUser == null)
+                {
+                    await _pageService.DisplayAlert("Error", "Username not found", "OK", "Cancel");
+                }
+                else if (!loginUser.Password.Equals(Password.Value))
+                {
+                    await _pageService.DisplayAlert("Error", "Wrong password", "OK", "Cancel");
+                }
+                else
+                {
+                    await _pageService.DisplayAlert("Login", loginUser.Username, "OK", "Cancel");
+                }
             }
         }
 
-        private async void OnBusinessTap()
+        private async void OnRegister()
         {
-            await _pageService.PushAsync(new BusinessRegistrationView());
-        }
-
-        private async void OnOrgTap()
-        {
-            await _pageService.PushAsync(new OrgRegistrationView());
+            await _pageService.PushAsync(new RegistrationView());
         }
     }
 }

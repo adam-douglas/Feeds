@@ -14,6 +14,8 @@ namespace Feeds
         private ValidatableObject<string> _email;
         private ValidatableObject<string> _phoneNo;
         private ValidatableObject<string> _password;
+        private ValidatableObject<string> _type;
+        private User newUser;
         public ICommand SubmitCommand { get; set; }
         private readonly IPageService _pageService;
 
@@ -26,6 +28,8 @@ namespace Feeds
             _email = new ValidatableObject<string>();
             _phoneNo = new ValidatableObject<string>();
             _password = new ValidatableObject<string>();
+            _type = new ValidatableObject<string>();
+            newUser = new User();
             SubmitCommand = new Command(OnSubmit);
             AddValidations();
         }
@@ -108,6 +112,19 @@ namespace Feeds
             }
         }
 
+        public ValidatableObject<string> Type
+        {
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                _type = value;
+                RaisePropertyChanged(() => Type);
+            }
+        }
+
         private bool Validate()
         {
             bool isValidUser = _username.Validate();
@@ -116,13 +133,15 @@ namespace Feeds
             bool isValidEmail = _email.Validate();
             bool isValidPhoneNo = _phoneNo.Validate();
             bool isValidPassword = _password.Validate();
+            bool isValidType = _type.Validate();
 
             return isValidUser
                 && isValidName
                 && isValidAddress
                 && isValidEmail
                 && isValidPhoneNo
-                && isValidPassword;
+                && isValidPassword
+                && isValidType;
         }
 
         private void AddValidations()
@@ -132,13 +151,21 @@ namespace Feeds
             _address.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "An address is required." });
             _email.Validations.Add(new EmailRule<string> { ValidationMessage = "Invalid Email." });
             _phoneNo.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "A phone number is required." });
-            _password.Validations.Add(new PasswordRule<string> { ValidationMessage = "should contain at least 8 characters, 1 numeric, 1 lowercase, 1 uppercase, 1 special character." });
+            _password.Validations.Add(new PasswordRule<string> { ValidationMessage = "Should contain at least 8 characters, 1 numeric, 1 lowercase, 1 uppercase, 1 special character." });
+            _type.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "User type is required." });
         }
 
         private async void OnSubmit()
         {
             if (Validate())
             {
+                newUser.Username = Username.Value;
+                newUser.Name = Name.Value;
+                newUser.Address = Address.Value;
+                newUser.Email = Email.Value;
+                newUser.Password = Password.Value;
+                newUser.Type = Type.Value;
+                await CosmosDBService.createUser(newUser);
                 await _pageService.DisplayAlert("Registered", "Successfully registered.", "OK", "Cancel");
             }
         }

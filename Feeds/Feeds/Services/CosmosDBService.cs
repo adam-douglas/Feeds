@@ -1,7 +1,10 @@
 ﻿using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
+using Microsoft.Azure.Documents.Linq;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Feeds
@@ -46,13 +49,40 @@ namespace Feeds
             return true;
         }
 
-        public static async Task<User> getAsync(string userId)
+        public static async Task<User> getByUsernameAsync(string username)
         {
             if (!await Initialize())
                 return new User();
-            var docUri = UriFactory.CreateDocumentUri(databaseName, collectionName, userId);
-            var user = await docClient.ReadDocumentAsync<User>(docUri);
-            return user;
+
+           List<User> users = new List<User>();
+
+            var docUri = UriFactory.CreateDocumentCollectionUri(databaseName, collectionName);
+            var feedOptions = new FeedOptions { MaxItemCount = -1 };
+            var userQuery = docClient.CreateDocumentQuery<User>(docUri, feedOptions)
+                .Where(u => u.Username.Equals(username))
+                .AsDocumentQuery();
+
+            while (userQuery.HasMoreResults)
+            {
+                var returnedUsers = await userQuery.ExecuteNextAsync<User>();
+                users.AddRange(returnedUsers);
+            }
+
+            if (!users.Any())
+            {
+                return null;
+            }
+
+            return users.First();
+        }
+
+        public static async Task createUser(User newUser)
+        {
+            if (!await Initialize())
+                return;
+            await docClient.CreateDocumentAsync(
+                UriFactory.CreateDocumentCollectionUri(databaseName, collectionName),
+                newUser);
         }
     }
 }

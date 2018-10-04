@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Feeds.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class OrgRegistrationView : ContentPage
+	public partial class RegistrationView : ContentPage
 	{
         private RegistrationViewModel registrationViewModel;
 
-        public OrgRegistrationView ()
+        public RegistrationView ()
 		{
 			InitializeComponent ();
             registrationViewModel = new RegistrationViewModel(new PageService());
@@ -22,10 +17,10 @@ namespace Feeds.Views
 
             usernameEntry.Completed += (object sender, EventArgs e) =>
             {
-                orgNameEntry.Focus();
+                nameEntry.Focus();
             };
 
-            orgNameEntry.Completed += (object sender, EventArgs e) =>
+            nameEntry.Completed += (object sender, EventArgs e) =>
             {
                 addressEntry.Focus();
             };

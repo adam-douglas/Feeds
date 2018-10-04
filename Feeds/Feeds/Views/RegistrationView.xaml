@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage Title="Business"
+<ContentPage Title="Register"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Feeds.Views.BusinessRegistrationView"
+             x:Class="Feeds.Views.RegistrationView"
              xmlns:converters="clr-namespace:Feeds">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -17,8 +17,23 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="0,0,0,10">
-                <Label Text="You're a step closer to helping." FontSize="Micro" />
+            <StackLayout Padding="0,10,0,10">
+                <Picker x:Name="typePicker"
+                        Title="Type of User"
+                        FontSize="Micro"
+                        HorizontalOptions="Center"
+                        WidthRequest="200"
+                        SelectedItem="{Binding Type.Value}"
+                >
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Business</x:String>
+                            <x:String>Organisation</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <Label Text="{Binding Type.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                       Style="{StaticResource ValidationErrorLabelStyle}" />
                 <Entry x:Name="usernameEntry"
                    FontSize="Micro"
                    HorizontalOptions="Center"
@@ -27,12 +42,12 @@
                    Placeholder="Username" />
                 <Label Text="{Binding Username.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
                        Style="{StaticResource ValidationErrorLabelStyle}" />
-                <Entry x:Name="businessNameEntry"
+                <Entry x:Name="nameEntry"
                    FontSize="Micro"
                    HorizontalOptions="Center"
                    WidthRequest="200"
                    Text="{Binding Name.Value}"
-                   Placeholder="Business Name" />
+                   Placeholder="Org or Business Name" />
                 <Label Text="{Binding Name.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
                        Style="{StaticResource ValidationErrorLabelStyle}" />
                 <Entry x:Name="addressEntry"
@@ -40,7 +55,7 @@
                    HorizontalOptions="Center"
                    WidthRequest="200"
                    Text="{Binding Address.Value}"
-                   Placeholder="Business Address" />
+                   Placeholder="Address" />
                 <Label Text="{Binding Address.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
                        Style="{StaticResource ValidationErrorLabelStyle}" />
                 <Entry x:Name="emailEntry"
