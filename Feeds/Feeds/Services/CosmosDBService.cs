@@ -49,7 +49,7 @@ namespace Feeds
             return true;
         }
 
-        public static async Task<User> getByUsernameAsync(string username)
+        public static async Task<User> GetByUsernameAsync(string username)
         {
             if (!await Initialize())
                 return new User();
@@ -76,7 +76,7 @@ namespace Feeds
             return users.First();
         }
 
-        public static async Task createUser(User newUser)
+        public static async Task CreateUser(User newUser)
         {
             if (!await Initialize())
                 return;

@@ -84,7 +84,7 @@ namespace Feeds
         {
             if (Validate())
             {
-                User loginUser = await CosmosDBService.getByUsernameAsync(Username.Value);
+                User loginUser = await CosmosDBService.GetByUsernameAsync(Username.Value);
 
                 if (loginUser == null)
                 {
