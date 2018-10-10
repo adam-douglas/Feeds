@@ -3,10 +3,26 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Feeds.Models
+namespace Feeds
 {
     public class Donation : ExtendedBindableObject
     {
+        string _id;
+        [JsonProperty("id")]
+        public string Id
+        {
+            get => _id;
+            set
+            {
+                if (_id == value)
+                    return;
+
+                _id = value;
+
+                RaisePropertyChanged(() => Id);
+            }
+        }
+
         string _createdBy;
         [JsonProperty("createdBy")]
         public string CreatedBy
@@ -24,7 +40,7 @@ namespace Feeds.Models
         }
 
         DateTime _createdAt;
-        [JsonProperty("createdBy")]
+        [JsonProperty("createdAt")]
         public DateTime CreatedAt
         {
             get => _createdAt;
@@ -55,9 +71,9 @@ namespace Feeds.Models
             }
         }
 
-        string _pickupFrom;
+        TimeSpan _pickupFrom;
         [JsonProperty("pickupFrom")]
-        public string PickupFrom
+        public TimeSpan PickupFrom
         {
             get => _pickupFrom;
             set
@@ -71,9 +87,9 @@ namespace Feeds.Models
             }
         }
 
-        string _pickupTo;
-        [JsonProperty("pickupFrom")]
-        public string PickupTo
+        TimeSpan _pickupTo;
+        [JsonProperty("pickupTo")]
+        public TimeSpan PickupTo
         {
             get => _pickupTo;
             set
@@ -84,6 +100,38 @@ namespace Feeds.Models
                 _pickupTo = value;
 
                 RaisePropertyChanged(() => PickupTo);
+            }
+        }
+
+        List<FoodItem> _foodItems;
+        [JsonProperty("foodItems")]
+        public List<FoodItem> FoodItems
+        {
+            get => _foodItems;
+            set
+            {
+                if (_foodItems == value)
+                    return;
+
+                _foodItems = value;
+
+                RaisePropertyChanged(() => FoodItems);
+            }
+        }
+
+        Address _address;
+        [JsonProperty("address")]
+        public Address Address
+        {
+            get => _address;
+            set
+            {
+                if (_address == value)
+                    return;
+
+                _address = value;
+
+                RaisePropertyChanged(() => Address);
             }
         }
     }

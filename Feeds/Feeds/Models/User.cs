@@ -52,9 +52,9 @@ namespace Feeds
             }
         }
 
-        string _address;
+        Address _address;
         [JsonProperty("address")]
-        public string Address
+        public Address Address
         {
             get => _address;
             set

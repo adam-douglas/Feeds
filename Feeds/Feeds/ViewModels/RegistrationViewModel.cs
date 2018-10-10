@@ -10,7 +10,9 @@ namespace Feeds
     {
         private ValidatableObject<string> _username;
         private ValidatableObject<string> _name;
-        private ValidatableObject<string> _address;
+        private ValidatableObject<string> _street;
+        private ValidatableObject<string> _city;
+        private ValidatableObject<string> _postcode;
         private ValidatableObject<string> _email;
         private ValidatableObject<string> _phoneNo;
         private ValidatableObject<string> _password;
@@ -24,7 +26,9 @@ namespace Feeds
             _pageService = pageService;
             _username = new ValidatableObject<string>();
             _name = new ValidatableObject<string>();
-            _address = new ValidatableObject<string>();
+            _street = new ValidatableObject<string>();
+            _city = new ValidatableObject<string>();
+            _postcode = new ValidatableObject<string>();
             _email = new ValidatableObject<string>();
             _phoneNo = new ValidatableObject<string>();
             _password = new ValidatableObject<string>();
@@ -60,16 +64,42 @@ namespace Feeds
             }
         }
 
-        public ValidatableObject<string> Address
+        public ValidatableObject<string> Street
         {
             get
             {
-                return _address;
+                return _street;
             }
             set
             {
-                _address = value;
-                RaisePropertyChanged(() => Address);
+                _street = value;
+                RaisePropertyChanged(() => Street);
+            }
+        }
+
+        public ValidatableObject<string> City
+        {
+            get
+            {
+                return _city;
+            }
+            set
+            {
+                _city = value;
+                RaisePropertyChanged(() => City);
+            }
+        }
+
+        public ValidatableObject<string> Postcode
+        {
+            get
+            {
+                return _postcode;
+            }
+            set
+            {
+                _postcode = value;
+                RaisePropertyChanged(() => Postcode);
             }
         }
 
@@ -129,7 +159,9 @@ namespace Feeds
         {
             bool isValidUser = _username.Validate();
             bool isValidName = _name.Validate();
-            bool isValidAddress = _address.Validate();
+            bool isValidStreet = _street.Validate();
+            bool isValidCity = _city.Validate();
+            bool isValidPostcode = _postcode.Validate();
             bool isValidEmail = _email.Validate();
             bool isValidPhoneNo = _phoneNo.Validate();
             bool isValidPassword = _password.Validate();
@@ -137,7 +169,9 @@ namespace Feeds
 
             return isValidUser
                 && isValidName
-                && isValidAddress
+                && isValidStreet
+                && isValidCity
+                && isValidPostcode
                 && isValidEmail
                 && isValidPhoneNo
                 && isValidPassword
@@ -148,7 +182,9 @@ namespace Feeds
         {
             _username.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "A username is required." });
             _name.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "A name is required." });
-            _address.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "An address is required." });
+            _street.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "An address is required." });
+            _city.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "A city is required." });
+            _postcode.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "A post code is required." });
             _email.Validations.Add(new EmailRule<string> { ValidationMessage = "Invalid Email." });
             _phoneNo.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "A phone number is required." });
             _password.Validations.Add(new PasswordRule<string> { ValidationMessage = "Should contain at least 8 characters, 1 numeric, 1 lowercase, 1 uppercase, 1 special character." });
@@ -161,8 +197,14 @@ namespace Feeds
             {
                 newUser.Username = Username.Value;
                 newUser.Name = Name.Value;
-                newUser.Address = Address.Value;
+                newUser.Address = new Address
+                {
+                    Street = Street.Value,
+                    City = City.Value,
+                    Postcode =Postcode.Value
+                };
                 newUser.Email = Email.Value;
+                newUser.PhoneNo = PhoneNo.Value;
                 newUser.Password = Hasher.Hash(Password.Value);
                 newUser.Type = Type.Value;
                 await CosmosDBService.CreateUser(newUser);

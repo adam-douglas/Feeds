@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage Title="Donation"
-             xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Feeds.Views.DonationFormView">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout x:Name="donationLayout" Padding="0,0,0,10">
+            <StackLayout Padding="0,0,0,10">
                 <StackLayout Orientation="Horizontal">
                     <Label Text="Pickup Date"
                            FontSize="Micro"
                            VerticalOptions="Center" />
                     <DatePicker x:Name="pickupDatePicker"
                                 FontSize="Micro"
-                                VerticalOptions="Center" />
+                                VerticalOptions="Center"
+                                Date="{Binding NewDonation.PickupDate}"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="From"
@@ -20,20 +20,21 @@
                            VerticalOptions="Center" />
                     <TimePicker x:Name="fromPicker"
                                 FontSize="Micro"
-                                VerticalOptions="Center" />
+                                VerticalOptions="Center"
+                                Time="{Binding NewDonation.PickupFrom}" />
                     <Label Text="To"
                            FontSize="Micro"
                            VerticalOptions="Center" />
                     <TimePicker x:Name="toPicker"
                                 FontSize="Micro"
-                                VerticalOptions="Center" />
+                                VerticalOptions="Center"
+                                Time="{Binding NewDonation.PickupTo}"/>
                 </StackLayout>
                 <Label Text="Food Items"
                        FontSize="Micro"
                        HorizontalOptions="Center" />
                 <StackLayout x:Name="foodLayout" />
-                <Button x:Name="addFoodButton"
-                        BorderRadius="10"
+                <Button BorderRadius="10"
                         BorderWidth="1"
                         BorderColor="Black"
                         WidthRequest="100"
@@ -42,6 +43,15 @@
                         FontSize="Micro"
                         Text="Add Food Item"
                         Command="{Binding AddFoodItemCommand}" />
+                <Button BorderRadius="10"
+                        BorderWidth="1"
+                        BorderColor="Black"
+                        WidthRequest="100"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        FontSize="Micro"
+                        Text="Submit"
+                        Command="{Binding SubmitCommand}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

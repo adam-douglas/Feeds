@@ -50,13 +50,29 @@
                    Placeholder="Org or Business Name" />
                 <Label Text="{Binding Name.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
                        Style="{StaticResource ValidationErrorLabelStyle}" />
-                <Entry x:Name="addressEntry"
+                <Entry x:Name="streetEntry"
                    FontSize="Micro"
                    HorizontalOptions="Center"
                    WidthRequest="200"
-                   Text="{Binding Address.Value}"
-                   Placeholder="Address" />
-                <Label Text="{Binding Address.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                   Text="{Binding Street.Value}"
+                   Placeholder="Street address" />
+                <Label Text="{Binding Street.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                       Style="{StaticResource ValidationErrorLabelStyle}" />
+                <Entry x:Name="cityEntry"
+                   FontSize="Micro"
+                   HorizontalOptions="Center"
+                   WidthRequest="200"
+                   Text="{Binding City.Value}"
+                   Placeholder="City" />
+                <Label Text="{Binding City.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                       Style="{StaticResource ValidationErrorLabelStyle}" />
+                <Entry x:Name="postcodeEntry"
+                   FontSize="Micro"
+                   HorizontalOptions="Center"
+                   WidthRequest="200"
+                   Text="{Binding Postcode.Value}"
+                   Placeholder="Postcode" />
+                <Label Text="{Binding Postcode.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
                        Style="{StaticResource ValidationErrorLabelStyle}" />
                 <Entry x:Name="emailEntry"
                    FontSize="Micro"

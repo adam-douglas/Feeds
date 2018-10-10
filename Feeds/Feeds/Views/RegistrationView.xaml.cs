@@ -22,10 +22,20 @@ namespace Feeds.Views
 
             nameEntry.Completed += (object sender, EventArgs e) =>
             {
-                addressEntry.Focus();
+                streetEntry.Focus();
             };
 
-            addressEntry.Completed += (object sender, EventArgs e) =>
+            streetEntry.Completed += (object sender, EventArgs e) =>
+            {
+                cityEntry.Focus();
+            };
+
+            cityEntry.Completed += (object sender, EventArgs e) =>
+            {
+                postcodeEntry.Focus();
+            };
+
+            postcodeEntry.Completed += (object sender, EventArgs e) =>
             {
                 emailEntry.Focus();
             };

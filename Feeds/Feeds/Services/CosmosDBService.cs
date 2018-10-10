@@ -84,5 +84,14 @@ namespace Feeds
                 UriFactory.CreateDocumentCollectionUri(databaseName, collectionName),
                 newUser);
         }
+
+        public static async Task CreateDonation(Donation newDonation)
+        {
+            if (!await Initialize())
+                return;
+            await docClient.CreateDocumentAsync(
+                UriFactory.CreateDocumentCollectionUri(databaseName, collectionName),
+                newDonation);
+        }
     }
 }
