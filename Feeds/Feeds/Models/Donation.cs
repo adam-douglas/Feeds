@@ -39,6 +39,22 @@ namespace Feeds
             }
         }
 
+        string _acceptedBy;
+        [JsonProperty("acceptedBy")]
+        public string AcceptedBy
+        {
+            get => _acceptedBy;
+            set
+            {
+                if (_acceptedBy == value)
+                    return;
+
+                _acceptedBy = value;
+
+                RaisePropertyChanged(() => AcceptedBy);
+            }
+        }
+
         DateTime _createdAt;
         [JsonProperty("createdAt")]
         public DateTime CreatedAt
@@ -116,6 +132,22 @@ namespace Feeds
                 _foodItems = value;
 
                 RaisePropertyChanged(() => FoodItems);
+            }
+        }
+
+        string _businessName;
+        [JsonProperty("businessName")]
+        public string BusinessName
+        {
+            get => _businessName;
+            set
+            {
+                if (_businessName == value)
+                    return;
+
+                _businessName = value;
+
+                RaisePropertyChanged(() => BusinessName);
             }
         }
 

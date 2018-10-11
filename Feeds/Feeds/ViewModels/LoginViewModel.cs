@@ -1,7 +1,6 @@
 ﻿using Feeds.Views;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Plugin.Settings;
+using Plugin.Settings.Abstractions;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -16,6 +15,7 @@ namespace Feeds
         public ICommand LoginCommand { get; private set; }
         public ICommand RegisterCommand { get; private set; }
         private readonly IPageService _pageService;
+        private static ISettings AppSettings => CrossSettings.Current;
         
         public LoginViewModel(IPageService pageService)
         {
@@ -96,9 +96,24 @@ namespace Feeds
                 }
                 else
                 {
-                    await _pageService.DisplayAlert("Login", loginUser.Username, "OK", "Cancel");
+                    UpdateAppSettings(loginUser);
+
+                    await _pageService.PushAsync(new MainTabbedPage());
                 }
             }
+        }
+
+        private void UpdateAppSettings(User loginUser)
+        {
+            AppSettings.AddOrUpdateValue("UserId", loginUser.Id);
+            AppSettings.AddOrUpdateValue("Username", loginUser.Username);
+            AppSettings.AddOrUpdateValue("Name", loginUser.Name);
+            AppSettings.AddOrUpdateValue("Street", loginUser.Address.Street);
+            AppSettings.AddOrUpdateValue("City", loginUser.Address.City);
+            AppSettings.AddOrUpdateValue("Postcode", loginUser.Address.Postcode);
+            AppSettings.AddOrUpdateValue("Email", loginUser.Email);
+            AppSettings.AddOrUpdateValue("PhoneNo", loginUser.PhoneNo);
+            AppSettings.AddOrUpdateValue("Type", loginUser.Type);
         }
 
         private async void OnRegister()

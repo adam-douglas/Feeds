@@ -14,9 +14,8 @@ namespace Feeds
         static DocumentClient docClient = null;
 
         static readonly string databaseName = "Feeds";
-        static readonly string collectionName = "Users";
 
-        static async Task<bool> Initialize()
+        static async Task<bool> Initialize(string collectionName)
         {
             if (docClient != null)
                 return true;
@@ -51,12 +50,12 @@ namespace Feeds
 
         public static async Task<User> GetByUsernameAsync(string username)
         {
-            if (!await Initialize())
+            if (!await Initialize("Users"))
                 return new User();
 
            List<User> users = new List<User>();
 
-            var docUri = UriFactory.CreateDocumentCollectionUri(databaseName, collectionName);
+            var docUri = UriFactory.CreateDocumentCollectionUri(databaseName, "Users");
             var feedOptions = new FeedOptions { MaxItemCount = -1 };
             var userQuery = docClient.CreateDocumentQuery<User>(docUri, feedOptions)
                 .Where(u => u.Username.Equals(username))
@@ -78,19 +77,39 @@ namespace Feeds
 
         public static async Task CreateUser(User newUser)
         {
-            if (!await Initialize())
+            if (!await Initialize("Users"))
                 return;
             await docClient.CreateDocumentAsync(
-                UriFactory.CreateDocumentCollectionUri(databaseName, collectionName),
+                UriFactory.CreateDocumentCollectionUri(databaseName, "Users"),
                 newUser);
+        }
+
+        public static async Task<List<Donation>> GetDonationsAsync()
+        {
+            List<Donation> donations = new List<Donation>();
+
+            if (!await Initialize("Donations"))
+                return donations;            
+
+            var docUri = UriFactory.CreateDocumentCollectionUri(databaseName, "Donations");
+            var feedOptions = new FeedOptions { MaxItemCount = -1 };
+            var donationsQuery = docClient.CreateDocumentQuery<Donation>(docUri, feedOptions).AsDocumentQuery();
+
+            while (donationsQuery.HasMoreResults)
+            {
+                var returnedDonation = await donationsQuery.ExecuteNextAsync<Donation>();
+                donations.AddRange(returnedDonation);
+            }
+
+            return donations;
         }
 
         public static async Task CreateDonation(Donation newDonation)
         {
-            if (!await Initialize())
+            if (!await Initialize("Donations"))
                 return;
             await docClient.CreateDocumentAsync(
-                UriFactory.CreateDocumentCollectionUri(databaseName, collectionName),
+                UriFactory.CreateDocumentCollectionUri(databaseName, "Donations"),
                 newDonation);
         }
     }

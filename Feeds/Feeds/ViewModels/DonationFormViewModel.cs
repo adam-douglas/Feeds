@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Plugin.Settings;
+using Plugin.Settings.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -7,6 +9,7 @@ namespace Feeds
 {
     class DonationFormViewModel : ExtendedBindableObject
     {
+        private static ISettings AppSettings => CrossSettings.Current;
         private Donation _newDonation;
         private int foodItemCount;
         public ICommand AddFoodItemCommand { get; set; }
@@ -18,7 +21,8 @@ namespace Feeds
             _pageService = pageService;
             _newDonation = new Donation
             {
-                FoodItems = new List<FoodItem>()
+                FoodItems = new List<FoodItem>(),
+                Address = new Address()
             };
             AddFoodItemCommand = new Command(AddFoodItem);
             SubmitCommand = new Command(OnSubmit);
@@ -49,8 +53,13 @@ namespace Feeds
         private async void OnSubmit()
         {
             NewDonation.CreatedAt = DateTime.Now;
+            NewDonation.BusinessName = AppSettings.GetValueOrDefault("Name", "");
+            NewDonation.CreatedBy = AppSettings.GetValueOrDefault("UserId", "");
+            NewDonation.Address.Street = AppSettings.GetValueOrDefault("Street", "");
+            NewDonation.Address.City = AppSettings.GetValueOrDefault("City", "");
+            NewDonation.Address.Postcode = AppSettings.GetValueOrDefault("Postcode", "");
             await CosmosDBService.CreateDonation(NewDonation);
-            await _pageService.DisplayAlert("Test", NewDonation.PickupFrom.ToString("c"), "OK", "Cancel");
+            await _pageService.DisplayAlert("Success", "Donation created.", "OK", "Cancel");
         }
     }
 }

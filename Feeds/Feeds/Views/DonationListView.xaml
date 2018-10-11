@@ -2,32 +2,34 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Feeds.Views.DonationListView">
-  <ListView x:Name="MyListView"
-            ItemsSource="{Binding Items}"
-            ItemTapped="Handle_ItemTapped"
+    <ListView x:Name="ViewList"
+            ItemsSource="{Binding DonationList}"
             CachingStrategy="RecycleElement">
-            
-    <!--Built in Cells-->
-    <ListView.ItemTemplate>
-        <DataTemplate>
-            <TextCell Text="{Binding .}" />
-        </DataTemplate>
-    </ListView.ItemTemplate>
-    
-    <!--Custom View Cells-->
-    <!--
-    <ListView.ItemTemplate>
-      <DataTemplate>
-        <ViewCell>
-          <StackLayout>
-            <Label Text="{Binding Text}" 
-                   Style="{DynamicResource ListItemTextStyle}" />
-            <Label Text="{Binding Detail}" 
-                   Style="{DynamicResource ListItemDetailTextStyle}"/>
-          </StackLayout>
-        </ViewCell>
-      </DataTemplate>
-    </ListView.ItemTemplate>
-    -->
-  </ListView>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Orientation="Horizontal" Padding="5,0,5,0">
+                        <StackLayout HorizontalOptions="StartAndExpand">
+                            <Label Text="{Binding BusinessName}"
+                                   LineBreakMode="TailTruncation"
+                                   FontSize="Small" />
+                            <Label Text="{Binding Address.Street}"
+                                   FontSize="Micro" />
+                        </StackLayout>
+                        <StackLayout Spacing="-2">
+                            <Label Text="{Binding PickupDate, StringFormat='{0:MMMM dd, yyyy}'}"
+                                   HorizontalOptions="End"
+                                   FontSize="Micro"/>
+                            <Label Text="{Binding PickupFrom, StringFormat='From: {0:hh\\:mm}'}"
+                                   HorizontalOptions="End"
+                                   FontSize="Micro" />
+                            <Label Text="{Binding PickupTo, StringFormat='To: {0:hh\\:mm}'}"
+                                   HorizontalOptions="End"
+                                   FontSize="Micro" />
+                        </StackLayout>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </ContentPage>
