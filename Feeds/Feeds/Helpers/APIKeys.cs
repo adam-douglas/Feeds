@@ -9,7 +9,7 @@ namespace Feeds
         public APIKeys()
         {
         }
-        public static readonly string CosmosEndpointUrl = "https://feeds-2018.documents.azure.com:443/";
+        public static readonly string CosmosEndpointUrl = "https://feeds2018.documents.azure.com:443/";
         public static readonly string CosmosAuthKey = "";
     }
 }

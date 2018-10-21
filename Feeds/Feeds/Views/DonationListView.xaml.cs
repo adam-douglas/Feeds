@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Feeds.Views
@@ -21,6 +19,11 @@ namespace Feeds.Views
         {
             base.OnAppearing();
             donationListViewModel.RefreshCommand.Execute(null);
+        }
+
+        private void ViewList_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            Navigation.PushAsync(new DonationView(e.Item as Donation));
         }
     }
 }

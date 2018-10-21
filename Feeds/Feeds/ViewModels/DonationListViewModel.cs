@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using Xamarin.Forms;
-using Feeds.Views;
 using System.Windows.Input;
 using System.Threading.Tasks;
+using Plugin.Settings.Abstractions;
+using Plugin.Settings;
 
 namespace Feeds
 { 
@@ -11,6 +12,7 @@ namespace Feeds
         private List<Donation> _donationList;
         public ICommand RefreshCommand { get; }
         public readonly IPageService _pageService;
+        private static ISettings AppSettings => CrossSettings.Current;
 
         public DonationListViewModel(IPageService pageService)
         {
@@ -34,7 +36,8 @@ namespace Feeds
 
         async Task GetDonations()
         {
-            DonationList = await CosmosDBService.GetDonationsAsync();
+
+            DonationList = await CosmosDBService.GetDonationsAsync(AppSettings.GetValueOrDefault("City",""));
         }
 
     }

@@ -97,7 +97,6 @@ namespace Feeds
                 else
                 {
                     UpdateAppSettings(loginUser);
-
                     await _pageService.PushAsync(new MainTabbedPage());
                 }
             }

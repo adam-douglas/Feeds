@@ -12,7 +12,7 @@ namespace Feeds
 		{
 			InitializeComponent();
 
-            MainPage = new DonationListView();
+            MainPage = new NavigationPage(new LoginView());
 		}
 
 		protected override void OnStart ()

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Feeds.Views;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -208,7 +206,10 @@ namespace Feeds
                 newUser.Password = Hasher.Hash(Password.Value);
                 newUser.Type = Type.Value;
                 await CosmosDBService.CreateUser(newUser);
-                await _pageService.DisplayAlert("Registered", "Successfully registered.", "OK", "Cancel");
+                if (await _pageService.DisplayAlert("Registered", "Successfully registered.", "OK", "Cancel"))
+                {
+                    await _pageService.PushAsync(new LoginView());
+                }
             }
         }
     }

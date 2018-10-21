@@ -84,7 +84,7 @@ namespace Feeds
                 newUser);
         }
 
-        public static async Task<List<Donation>> GetDonationsAsync()
+        public static async Task<List<Donation>> GetDonationsAsync(string city)
         {
             List<Donation> donations = new List<Donation>();
 
@@ -93,7 +93,7 @@ namespace Feeds
 
             var docUri = UriFactory.CreateDocumentCollectionUri(databaseName, "Donations");
             var feedOptions = new FeedOptions { MaxItemCount = -1 };
-            var donationsQuery = docClient.CreateDocumentQuery<Donation>(docUri, feedOptions).AsDocumentQuery();
+            var donationsQuery = docClient.CreateDocumentQuery<Donation>(docUri, feedOptions).Where(dntn => dntn.Address.City == city && dntn.AcceptedBy == null).AsDocumentQuery();
 
             while (donationsQuery.HasMoreResults)
             {

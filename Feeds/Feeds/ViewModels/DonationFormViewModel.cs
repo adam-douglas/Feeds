@@ -1,4 +1,5 @@
-﻿using Plugin.Settings;
+﻿using Feeds.Views;
+using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,10 @@ namespace Feeds
             NewDonation.Address.City = AppSettings.GetValueOrDefault("City", "");
             NewDonation.Address.Postcode = AppSettings.GetValueOrDefault("Postcode", "");
             await CosmosDBService.CreateDonation(NewDonation);
-            await _pageService.DisplayAlert("Success", "Donation created.", "OK", "Cancel");
+            if (await _pageService.DisplayAlert("Success", "Donation created.", "OK", "Cancel"))
+            {
+                await _pageService.PushAsync(new DonationFormView());
+            }
         }
     }
 }

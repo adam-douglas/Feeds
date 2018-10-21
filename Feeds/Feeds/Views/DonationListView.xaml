@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Feeds.Views.DonationListView">
     <ListView x:Name="ViewList"
-            ItemsSource="{Binding DonationList}"
-            CachingStrategy="RecycleElement">
+              ItemsSource="{Binding DonationList}"
+              ItemTapped="ViewList_ItemTapped"
+              CachingStrategy="RecycleElement">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
