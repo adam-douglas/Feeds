@@ -7,11 +7,13 @@ namespace Feeds.Views
     public partial class DonationListView : ContentPage
     {
         private DonationListViewModel donationListViewModel;
+        private string _type;
 
-        public DonationListView()
+        public DonationListView(string type)
         {
             InitializeComponent();
-            donationListViewModel = new DonationListViewModel(new PageService());
+            _type = type;
+            donationListViewModel = new DonationListViewModel(new PageService(), _type);
             this.BindingContext = donationListViewModel;
         }
 
@@ -21,9 +23,9 @@ namespace Feeds.Views
             donationListViewModel.RefreshCommand.Execute(null);
         }
 
-        private void ViewList_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            Navigation.PushAsync(new DonationView(e.Item as Donation));
+            Navigation.PushAsync(new DonationView(e.Item as Donation, _type));
         }
     }
 }

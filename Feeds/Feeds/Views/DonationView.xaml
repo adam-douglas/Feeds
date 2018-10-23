@@ -3,10 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Feeds.Views.DonationView">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout x:Name="donationLayout" Padding="0,0,0,10">
             <Label Text="{Binding SelectedDonation.BusinessName}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                   HorizontalOptions="CenterAndExpand" />
+            <Label Text="{Binding SelectedDonation.CreatedAt, StringFormat='Post at: {0:MMMM dd, hh:mm}'}"
+                   FontSize="Micro" />
+            <Label Text="{Binding SelectedDonation.PickupDate, StringFormat='Pickup Date: {0:MMMM dd, yyyy}'}"
+                   FontSize="Micro"/>
+            <Label Text="{Binding SelectedDonation.PickupFrom, StringFormat='From: {0:hh\\:mm}'}"
+                   FontSize="Micro" />
+            <Label Text="{Binding SelectedDonation.PickupTo, StringFormat='To: {0:hh\\:mm}'}"
+                   FontSize="Micro" />
+            <Label Text="{Binding AcceptedBy.Name, StringFormat='Accepted By: {0}'}"
+                   HorizontalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

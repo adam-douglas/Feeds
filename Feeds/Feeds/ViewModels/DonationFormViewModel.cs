@@ -62,7 +62,7 @@ namespace Feeds
             await CosmosDBService.CreateDonation(NewDonation);
             if (await _pageService.DisplayAlert("Success", "Donation created.", "OK", "Cancel"))
             {
-                await _pageService.PushAsync(new DonationFormView());
+                await _pageService.PushAsync(new MainTabbedPage());
             }
         }
     }

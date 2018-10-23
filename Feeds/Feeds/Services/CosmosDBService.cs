@@ -75,6 +75,17 @@ namespace Feeds
             return users.First();
         }
 
+        public static async Task<User> GetByIdAsync(string userId)
+        {
+            if (!await Initialize("Users"))
+                return new User();
+
+            User user = new User();
+            var docUri = UriFactory.CreateDocumentUri(databaseName, "Users", userId);
+            user = await docClient.ReadDocumentAsync<User>(docUri);
+            return user;
+        }
+
         public static async Task CreateUser(User newUser)
         {
             if (!await Initialize("Users"))
@@ -104,6 +115,46 @@ namespace Feeds
             return donations;
         }
 
+        public static async Task<List<Donation>> GetAcceptedDonations(string userId)
+        {
+            List<Donation> donations = new List<Donation>();
+
+            if (!await Initialize("Donations"))
+                return donations;
+
+            var docUri = UriFactory.CreateDocumentCollectionUri(databaseName, "Donations");
+            var feedOptions = new FeedOptions { MaxItemCount = -1 };
+            var donationsQuery = docClient.CreateDocumentQuery<Donation>(docUri, feedOptions).Where(dntn => dntn.AcceptedBy == userId).AsDocumentQuery();
+
+            while (donationsQuery.HasMoreResults)
+            {
+                var returnedDonation = await donationsQuery.ExecuteNextAsync<Donation>();
+                donations.AddRange(returnedDonation);
+            }
+
+            return donations;
+        }
+
+        public static async Task<List<Donation>> GetUsersDonations(string userId)
+        {
+            List<Donation> donations = new List<Donation>();
+
+            if (!await Initialize("Donations"))
+                return donations;
+
+            var docUri = UriFactory.CreateDocumentCollectionUri(databaseName, "Donations");
+            var feedOptions = new FeedOptions { MaxItemCount = -1 };
+            var donationsQuery = docClient.CreateDocumentQuery<Donation>(docUri, feedOptions).Where(dntn => dntn.CreatedBy == userId).AsDocumentQuery();
+
+            while (donationsQuery.HasMoreResults)
+            {
+                var returnedDonation = await donationsQuery.ExecuteNextAsync<Donation>();
+                donations.AddRange(returnedDonation);
+            }
+
+            return donations;
+        }
+
         public static async Task CreateDonation(Donation newDonation)
         {
             if (!await Initialize("Donations"))
@@ -111,6 +162,24 @@ namespace Feeds
             await docClient.CreateDocumentAsync(
                 UriFactory.CreateDocumentCollectionUri(databaseName, "Donations"),
                 newDonation);
+        }
+
+        public static async Task UpdateDonation(Donation updatedDonation)
+        {
+            if (!await Initialize("Donations"))
+                return;
+
+            var docUri = UriFactory.CreateDocumentUri(databaseName, "Donations", updatedDonation.Id);
+            await docClient.ReplaceDocumentAsync(docUri, updatedDonation);
+        }
+
+        public static async Task DeleteDonation(string donationId)
+        {
+            if (!await Initialize("Donations"))
+                return;
+
+            var docUri = UriFactory.CreateDocumentUri(databaseName, "Donations", donationId);
+            await docClient.DeleteDocumentAsync(docUri);
         }
     }
 }
