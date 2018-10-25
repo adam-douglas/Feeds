@@ -15,13 +15,13 @@ namespace Feeds.Views
             InitializeComponent();
             if (AppSettings.GetValueOrDefault("Type", "Unknown") == "Business")
             {
-                var donationFormNavPage = new DonationFormView();
-                donationFormNavPage.Title = "Post Donation";
-                Children.Add(donationFormNavPage);
-
                 var homePage = new DonationListView("business");
                 homePage.Title = "Home";
                 Children.Add(homePage);
+
+                var donationFormNavPage = new DonationFormView();
+                donationFormNavPage.Title = "Post Donation";
+                Children.Add(donationFormNavPage);
             }
             else if(AppSettings.GetValueOrDefault("Type", "Unknown") == "Organisation")
             {
@@ -30,7 +30,7 @@ namespace Feeds.Views
                 Children.Add(donationListNavPage);
 
                 var homePage = new DonationListView("org_accepted");
-                homePage.Title = "Home";
+                homePage.Title = "Pickups";
                 Children.Add(homePage);
             }
             else
