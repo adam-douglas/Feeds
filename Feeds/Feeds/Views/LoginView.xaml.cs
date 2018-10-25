@@ -30,5 +30,11 @@ namespace Feeds.Views
                 loginViewModel.LoginCommand.Execute(null);
             };
         }
+
+        //protected override void OnAppearing()
+        //{
+        //    base.OnAppearing();
+        //    loginViewModel.AutoLoginCommand.Execute(null);
+        //}
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Feeds.Views;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -13,6 +14,7 @@ namespace Feeds
         public ICommand ValidateUsernameCommand { get; private set; }
         public ICommand ValidatePasswordCommand { get; private set; }
         public ICommand LoginCommand { get; private set; }
+        //public ICommand AutoLoginCommand { get; private set; }
         public ICommand RegisterCommand { get; private set; }
         private readonly IPageService _pageService;
         private static ISettings AppSettings => CrossSettings.Current;
@@ -24,6 +26,7 @@ namespace Feeds
             _password = new ValidatableObject<string>();
             ValidateUsernameCommand = new Command(() => ValidateUsername());
             ValidatePasswordCommand = new Command(() => ValidatePassword());
+            //AutoLoginCommand = new Command(async () => await AutoLoginAsync());
             LoginCommand = new Command(OnLogin);
             RegisterCommand = new Command(OnRegister);
             AddValidations();
@@ -84,21 +87,26 @@ namespace Feeds
         {
             if (Validate())
             {
-                User loginUser = await CosmosDBService.GetByUsernameAsync(Username.Value);
+                await Login(Username.Value, Password.Value);
+            }
+        }
 
-                if (loginUser == null)
-                {
-                    await _pageService.DisplayAlert("Error", "Username not found", "OK", "Cancel");
-                }
-                else if (!Hasher.Verify(Password.Value, loginUser.Password))
-                {
-                    await _pageService.DisplayAlert("Error", "Wrong password", "OK", "Cancel");
-                }
-                else
-                {
-                    UpdateAppSettings(loginUser);
-                    await _pageService.PushAsync(new MainTabbedPage());
-                }
+        private async Task Login(string uname, string pw)
+        {
+            User loginUser = await CosmosDBService.GetByUsernameAsync(uname);
+
+            if (loginUser == null)
+            {
+                await _pageService.DisplayAlert("Error", "Username not found", "OK", "Cancel");
+            }
+            else if (!Hasher.Verify(pw, loginUser.Password))
+            {
+                await _pageService.DisplayAlert("Error", "Wrong password", "OK", "Cancel");
+            }
+            else
+            {
+                UpdateAppSettings(loginUser);
+                await _pageService.PushAsync(new MainTabbedPage());
             }
         }
 
@@ -106,6 +114,7 @@ namespace Feeds
         {
             AppSettings.AddOrUpdateValue("UserId", loginUser.Id);
             AppSettings.AddOrUpdateValue("Username", loginUser.Username);
+            AppSettings.AddOrUpdateValue("Password", Password.Value);
             AppSettings.AddOrUpdateValue("Name", loginUser.Name);
             AppSettings.AddOrUpdateValue("Street", loginUser.Address.Street);
             AppSettings.AddOrUpdateValue("City", loginUser.Address.City);
@@ -114,6 +123,16 @@ namespace Feeds
             AppSettings.AddOrUpdateValue("PhoneNo", loginUser.PhoneNo);
             AppSettings.AddOrUpdateValue("Type", loginUser.Type);
         }
+
+        //private async Task AutoLoginAsync()
+        //{
+        //    string uname = AppSettings.GetValueOrDefault("Username", "failed");
+        //    string pw = AppSettings.GetValueOrDefault("Password", "failed");
+        //    if (uname != "failed" && pw != "failed")
+        //    {
+        //        await Login(uname, pw);
+        //    }
+        //}
 
         private async void OnRegister()
         {

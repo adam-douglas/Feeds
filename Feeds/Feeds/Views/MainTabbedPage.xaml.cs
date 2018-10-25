@@ -26,7 +26,7 @@ namespace Feeds.Views
             else if(AppSettings.GetValueOrDefault("Type", "Unknown") == "Organisation")
             {
                 var donationListNavPage = new DonationListView("org_available");
-                donationListNavPage.Title = "Donations";
+                donationListNavPage.Title = "Feed";
                 Children.Add(donationListNavPage);
 
                 var homePage = new DonationListView("org_accepted");
@@ -37,6 +37,10 @@ namespace Feeds.Views
             {
                 Children.Add(new LoginView());
             }
+            var settingsPage = new SettingsView();
+            settingsPage.Title = "Settings";
+            Children.Add(settingsPage);
+
         }
     }
 }
