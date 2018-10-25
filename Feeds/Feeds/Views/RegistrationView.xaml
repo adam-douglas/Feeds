@@ -102,14 +102,16 @@
                 <Label Text="{Binding Password.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
                        Style="{StaticResource ValidationErrorLabelStyle}" />
                 <Button BorderRadius="10"
-                    BorderWidth="1"
-                    BorderColor="Black"
-                    WidthRequest="100"
-                    HeightRequest="35"
-                    HorizontalOptions="Center"
-                    FontSize="Micro"
-                    Text="Submit"
-                    Command="{Binding SubmitCommand}" />
+                        BorderWidth="1"
+                        BorderColor="#6EB275"
+                        WidthRequest="100"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        FontSize="Micro"
+                        Text="Submit"
+                        BackgroundColor="#6EB275"
+                        TextColor="White"
+                        Command="{Binding SubmitCommand}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

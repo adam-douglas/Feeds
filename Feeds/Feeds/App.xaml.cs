@@ -11,8 +11,8 @@ namespace Feeds
 		public App ()
 		{
 			InitializeComponent();
-
             MainPage = new NavigationPage(new LoginView());
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("6EB275");
 		}
 
 		protected override void OnStart ()

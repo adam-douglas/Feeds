@@ -42,6 +42,7 @@
                         HorizontalOptions="Center"
                         FontSize="Micro"
                         Text="Add Food Item"
+                        BackgroundColor="#835AA6"
                         Command="{Binding AddFoodItemCommand}" />
                 <Button BorderRadius="10"
                         BorderWidth="1"
@@ -51,6 +52,7 @@
                         HorizontalOptions="Center"
                         FontSize="Micro"
                         Text="Submit"
+                        BackgroundColor="#6EB275"
                         Command="{Binding SubmitCommand}" />
             </StackLayout>
         </ScrollView>

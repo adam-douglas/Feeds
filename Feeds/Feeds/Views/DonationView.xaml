@@ -1,19 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Feeds.Views.DonationView">
+             x:Class="Feeds.Views.DonationView"
+             Title="{Binding SelectedDonation.BusinessName}">
     <ContentPage.Content>
-        <StackLayout x:Name="donationLayout" Padding="0,0,0,10">
+        <StackLayout x:Name="donationLayout" Padding="10,0,0,10">
             <Label Text="{Binding SelectedDonation.BusinessName}"
                    HorizontalOptions="CenterAndExpand" />
-            <Label Text="{Binding SelectedDonation.CreatedAt, StringFormat='Post at: {0:MMMM dd, hh:mm}'}"
-                   FontSize="Micro" />
-            <Label Text="{Binding SelectedDonation.PickupDate, StringFormat='Pickup Date: {0:MMMM dd, yyyy}'}"
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="{Binding SelectedDonation.Address.Street}" FontSize="Micro" />
+                <Label Text="{Binding SelectedDonation.Address.City}" FontSize="Micro" />
+                <Label Text="{Binding SelectedDonation.Address.Postcode}" FontSize="Micro" />
+            </StackLayout>
+            <Label Text="Pickup Details"
+                   FontSize="Small"
+                   HorizontalOptions="CenterAndExpand" />
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="{Binding SelectedDonation.PickupDate, StringFormat='{0:MMMM dd}'}"
                    FontSize="Micro"/>
             <Label Text="{Binding SelectedDonation.PickupFrom, StringFormat='From: {0:hh\\:mm}'}"
                    FontSize="Micro" />
             <Label Text="{Binding SelectedDonation.PickupTo, StringFormat='To: {0:hh\\:mm}'}"
                    FontSize="Micro" />
+            </StackLayout>
+            <Label Text="Food Available"
+                   HorizontalOptions="CenterAndExpand" />
+            <StackLayout x:Name="foodLayout" HorizontalOptions="Center">
+            </StackLayout>
             <Label Text="{Binding AcceptedBy.Name, StringFormat='Accepted By: {0}'}"
                    HorizontalOptions="CenterAndExpand" />
         </StackLayout>
