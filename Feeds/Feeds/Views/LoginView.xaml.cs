@@ -18,6 +18,7 @@ namespace Feeds.Views
             InitializeComponent();
             loginViewModel = new LoginViewModel(new PageService());
             this.BindingContext = loginViewModel;
+            logo.Source = ImageSource.FromFile("logo.png");
 
             usernameEntry.Completed += (object sender, EventArgs e) =>
             {

@@ -19,7 +19,7 @@
         <ScrollView>
             <StackLayout>
                 <StackLayout Padding="0, 10, 0, 25">
-                    <Image Source="https://via.placeholder.com/700x250" />
+                    <Image x:Name="logo" />
                 </StackLayout>
 
                 <StackLayout Padding="0, 0, 0, 10">
