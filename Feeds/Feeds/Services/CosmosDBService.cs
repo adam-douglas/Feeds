@@ -104,7 +104,7 @@ namespace Feeds
 
             var docUri = UriFactory.CreateDocumentCollectionUri(databaseName, "Donations");
             var feedOptions = new FeedOptions { MaxItemCount = -1 };
-            var donationsQuery = docClient.CreateDocumentQuery<Donation>(docUri, feedOptions).Where(dntn => dntn.Address.City == city && dntn.AcceptedBy == null).AsDocumentQuery();
+            var donationsQuery = docClient.CreateDocumentQuery<Donation>(docUri, feedOptions).Where(dntn => dntn.Address.City == city && dntn.AcceptedBy == null).OrderBy(dntn => dntn.PickupDate).AsDocumentQuery();
 
             while (donationsQuery.HasMoreResults)
             {
